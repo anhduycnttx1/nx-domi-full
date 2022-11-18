@@ -7,6 +7,7 @@ import NotFoundPage from './pages/not-found/not-found'
 import Loaders from './components/loading/loaders'
 import RunningPage from './pages/running-page/running-page'
 import BuilderPage from './pages/builder-page/builder-page'
+import DemoPage from './pages/demo/demo'
 
 export function App() {
   const router = createBrowserRouter([
@@ -18,16 +19,30 @@ export function App() {
         {
           path: '/',
           element: <HomePage />,
-          loader: async () => undefined,
-          id: 'main',
         },
         {
           path: '/dashboard',
-          element: <div>Dashboard</div>,
+          element: <DemoPage title="This is Dashboard Page" />,
+        },
+        {
+          path: '/template',
+          element: <DemoPage title="This is Template List" />,
+        },
+        {
+          path: '/showcase',
+          element: <DemoPage title="This is Showcase List" />,
         },
         {
           path: '/account',
           element: <AccountPage />,
+        },
+        {
+          path: '/domain',
+          element: <DemoPage title="This is Domain List" />,
+        },
+        {
+          path: '/setting',
+          element: <DemoPage title="Setting Page" />,
         },
       ],
     },

@@ -18,20 +18,20 @@ import {
   Popover,
   ActionIcon,
   Space,
-  Box,
 } from '@mantine/core'
 import {
   IconSearch,
   TablerIcon,
   IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
   IconFingerprint,
-  IconCalendarStats,
   IconUser,
   IconSettings,
   IconBell,
   IconMessageCircle2,
+  IconLayoutDashboard,
+  IconBuildingStore,
+  IconWorldWww,
+  IconLayoutCollage,
 } from '@tabler/icons'
 import { Outlet, Link } from 'react-router-dom'
 import logoApp from '../../../assets/image/logo-white.png'
@@ -50,11 +50,11 @@ interface NavbarLinkProps {
 
 const routerMockup = [
   { icon: IconHome2, label: 'Home', href: '/' },
-  { icon: IconGauge, label: 'Dashboard', href: '/dashboard' },
-  { icon: IconDeviceDesktopAnalytics, label: 'Analytics', href: '/analytics' },
-  { icon: IconCalendarStats, label: 'Releases', href: '/release' },
+  { icon: IconLayoutDashboard, label: 'Dashboard', href: '/dashboard' },
+  { icon: IconLayoutCollage, label: 'Template', href: '/template' },
+  { icon: IconBuildingStore, label: 'Showcase', href: '/showcase' },
+  { icon: IconWorldWww, label: 'Domain', href: '/domain' },
   { icon: IconUser, label: 'Account', href: '/account' },
-  { icon: IconFingerprint, label: 'Security', href: '/security' },
   { icon: IconSettings, label: 'Settings', href: '/setting' },
 ]
 
