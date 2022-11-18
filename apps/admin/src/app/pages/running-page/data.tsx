@@ -37,6 +37,7 @@ export const dataMockup = {
             uid: '24T74FLr03',
             component: 'INPUT',
             payloads: {
+              withAsterisk: true,
               placeholder: 'Your password',
               miw: '500px',
               type: 'password',

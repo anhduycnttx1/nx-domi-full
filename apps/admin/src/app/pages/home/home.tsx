@@ -13,11 +13,11 @@ export function Home(props: HomeProps) {
     <Grid className="home" align="center" columns={24} px="60px" mih={'calc(100vh - 150px)'}>
       <Grid.Col span={9}>
         <Stack spacing="xl">
-          <Title order={2}> Bạn chưa tạo Landing Page nào!</Title>
+          <Title order={2}> Bạn chưa tạo Trang Web nào!</Title>
           <Text>
             Bấm{' '}
             <Text fw={500} span>
-              TẠO LANDING PAGE NGAY
+              TẠO TRANG NGAY
             </Text>{' '}
             để bắt đầu thiết kế landing page đầu tiên của mình. Nếu bạn là người mới sử dụng lần
             đầu, hãy bấm vào{' '}
@@ -28,11 +28,11 @@ export function Home(props: HomeProps) {
           </Text>
           <Flex gap="md" w="100%" align="center">
             <Link to={'builder-page/11'}>
-              <Button>Tạo page ngay</Button>
+              <Button color="orange">Tạo trang ngay</Button>
             </Link>
             <Text fz="sm">Hoặc</Text>
             <Link to={'runner-page/11'}>
-              <Button variant="light">Xem hướng dẫn</Button>
+              <Button variant="subtle">Xem hướng dẫn</Button>
             </Link>
           </Flex>
         </Stack>

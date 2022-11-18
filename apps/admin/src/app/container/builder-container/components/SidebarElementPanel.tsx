@@ -1,39 +1,31 @@
-import { ActionIcon, Flex, Text } from '@mantine/core'
+import { ActionIcon, Popover, Tooltip, Text } from '@mantine/core'
 import { ReactNode } from 'react'
 
 type SidebarElementPanelProps = {
   icon: ReactNode
   label: string
+  isPlus: boolean
 }
 
-export function SidebarElementPanel({ icon, label }: SidebarElementPanelProps) {
-  const listColor: string[] = [
-    'grape',
-    'red',
-    'pink',
-    'cyan',
-    'indigo',
-    'teal',
-    'yellow',
-    'orange',
-    'blue',
-  ]
-
+export function SidebarElementPanel({ icon, label, isPlus }: SidebarElementPanelProps) {
   return (
-    <Flex
-      gap="xs"
-      style={{ cursor: 'move' }}
-      p="sm"
-      sx={{
-        '&:hover': {
-          backgroundColor: '#eee',
-        },
-      }}
-    >
-      <ActionIcon color={listColor[label.length % 9]} variant="light">
-        {icon}
-      </ActionIcon>
-      <Text>{label}</Text>
-    </Flex>
+    <Tooltip label={label} color="gray" position="right" withArrow>
+      {!isPlus ? (
+        <ActionIcon color="gray" variant="subtle">
+          {icon}
+        </ActionIcon>
+      ) : (
+        <Popover width={200} position="right-end" shadow="md" offset={16}>
+          <Popover.Target>
+            <ActionIcon color="gray" variant="subtle">
+              {icon}
+            </ActionIcon>
+          </Popover.Target>
+          <Popover.Dropdown>
+            <Text size="sm">This is uncontrolled popover, it is opened when button is clicked</Text>
+          </Popover.Dropdown>
+        </Popover>
+      )}
+    </Tooltip>
   )
 }

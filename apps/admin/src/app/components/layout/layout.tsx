@@ -136,12 +136,6 @@ function NavbarApp() {
           ))}
         </Stack>
       </Navbar.Section>
-      {/* Footer with user */}
-      {/* <Navbar.Section>
-        <Center>
-          <Avatar color="red" radius="md" src={avtMockup} alt="avt" />
-        </Center>
-      </Navbar.Section> */}
     </Navbar>
   )
 }
@@ -215,7 +209,7 @@ function LayoutDashboard(props: LayoutProps) {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       sx={{
-        main: { backgroundColor: '#fff' },
+        main: { backgroundColor: '#f8fafc' },
       }}
     >
       <HeaderApp />

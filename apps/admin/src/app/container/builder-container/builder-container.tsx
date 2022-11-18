@@ -1,35 +1,8 @@
 import { useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import {
-  AppShell,
-  Aside,
-  Button,
-  Container,
-  Flex,
-  Header,
-  Navbar,
-  Image,
-  ActionIcon,
-  Divider,
-} from '@mantine/core'
 
-import {
-  IconChevronLeft,
-  IconArrowBackUp,
-  IconArrowForwardUp,
-  IconHeading,
-  IconLetterCase,
-  IconLayout,
-  IconLayoutGrid,
-  IconPhoto,
-  IconSeparator,
-  IconPlus,
-  IconStack,
-  IconDeviceAirpods,
-  IconDeviceLaptop,
-  IconDeviceTablet,
-} from '@tabler/icons'
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { AppShell, Button, Container, Drawer, Flex } from '@mantine/core'
+
 import {
   DndContext,
   DragStartEvent,
@@ -42,71 +15,20 @@ import {
   MouseSensor,
   TouchSensor,
 } from '@dnd-kit/core'
-import { SidebarPanel as SidebarPanelUI } from './components/SidebarPanel'
+
 import MainAppBuilder from './main-app-builder'
 import EmptyDiv from '../../components/empty/empty'
+import HeaderBuiderPage from './components/layout/HeaderBuilderPage'
+import { AsideBuider, NavbarBuider } from './components/layout/NavbarBuiderPage'
 
 export interface BuiderContainerProps {
   data?: any
 }
 
-const heightHeader = 48
-const styleShadow = {
-  boxShadow: '0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-}
-const styleActionIcon = (theme: any) => ({
-  padding: '5px',
-  borderRadius: theme.radius.xl,
-  '&:hover': { color: '#3899ec', background: '#edf4fb' },
-})
-const mockMenu = [
-  {
-    id: 'layout',
-    title: 'Layout',
-    child: [
-      {
-        id: 'autolayout',
-        label: 'Auto Layout',
-        icon: <IconLayout />,
-      },
-      {
-        id: 'grid',
-        label: 'Grid',
-        icon: <IconLayoutGrid />,
-      },
-    ],
-  },
-  {
-    id: 'display',
-    title: 'Display',
-    child: [
-      {
-        id: 'heading',
-        label: 'Heading',
-        icon: <IconHeading />,
-      },
-      {
-        id: 'text',
-        label: 'Text',
-        icon: <IconLetterCase />,
-      },
-      {
-        id: 'photo',
-        label: 'Photo',
-        icon: <IconPhoto />,
-      },
-      {
-        id: 'divider',
-        label: 'Divider',
-        icon: <IconSeparator />,
-      },
-    ],
-  },
-]
-const PLACEHOLDER_ID = 'placeholder'
-
 export default function BuiderContainer(props: BuiderContainerProps) {
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [opened, setOpened] = useState(false)
+  const [data, setData] = useState<any[]>([])
   // const lastOverId = useRef<UniqueIdentifier | null>(null)
   // const recentlyMovedToNewContainer = useRef(false)
   // const isSortingContainer = activeId ? mockMenu.includes(id, activeId) : false
@@ -147,117 +69,52 @@ export default function BuiderContainer(props: BuiderContainerProps) {
         padding="md"
         navbar={<NavbarBuider />}
         aside={<AsideBuider />}
-        header={<HeaderBuider />}
+        header={<HeaderBuiderPage onOpened={setOpened} />}
         sx={(theme) => ({
-          main: { backgroundColor: '#f1f5f9' },
+          main: { backgroundColor: '#f8fafc' },
         })}
       >
         {/* Your application here */}
-        <ApplicationBuilder />
+        <ApplicationBuilder data={data} />
       </AppShell>
       <DragOverlay adjustScale={false}>
         {activeId ? <EmptyDiv label="Drop and drap a layout to start" /> : null}
       </DragOverlay>
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Register"
+        padding="xl"
+        size="xl"
+      >
+        {/* Drawer content */}
+      </Drawer>
     </DndContext>
   )
 }
 
-function ApplicationBuilder() {
-  const [data, setData] = useState([])
+interface ApplicationBuilderProps {
+  data: any
+}
 
+function ApplicationBuilder({ data }: ApplicationBuilderProps) {
   return (
-    <Container h="100%" size="xl">
+    <Container
+      h="100%"
+      size="md"
+      sx={{
+        borderRight: '0.5px dashed #3899ec',
+        borderLeft: '0.5px dashed #3899ec',
+      }}
+    >
       {data && data[0] ? (
         <MainAppBuilder />
       ) : (
-        <Flex justify="center" align="center" h="100%">
+        <Flex justify="center" align="center" h="100%" direction="column" gap="md">
           <EmptyDiv label="Drop and drap a layout to start" />
+          <Button variant="light">New a section</Button>
         </Flex>
       )}
     </Container>
-  )
-}
-
-function HeaderBuider() {
-  return (
-    <Header
-      height={heightHeader}
-      p="sm"
-      sx={{
-        ...styleShadow,
-      }}
-    >
-      <Flex mr={16} justify="space-between" align="center" h="100%">
-        <Flex align="center" gap="md">
-          <Link to="/">
-            <ActionIcon>
-              <IconChevronLeft size={20} />
-            </ActionIcon>
-          </Link>
-          <Divider my={6} orientation="vertical" />
-          <ActionIcon variant="light" color="blue" radius="xl">
-            <IconPlus size={20} />
-          </ActionIcon>
-          <ActionIcon variant="light" radius="xl">
-            <IconStack size={20} />
-          </ActionIcon>
-          <Divider my={6} orientation="vertical" />
-          <ActionIcon variant="light" radius="xl">
-            <IconDeviceLaptop size={20} />
-          </ActionIcon>
-          <ActionIcon variant="light" radius="xl">
-            <IconDeviceTablet size={20} />
-          </ActionIcon>
-        </Flex>
-        <Flex gap="xs">
-          <ActionIcon sx={styleActionIcon} onClick={() => console.log('Back up')}>
-            <IconArrowBackUp size={18} />
-          </ActionIcon>
-          <ActionIcon sx={styleActionIcon} onClick={() => console.log('Forwar up')}>
-            <IconArrowForwardUp size={18} />
-          </ActionIcon>
-          <Divider my={6} orientation="vertical" />
-          <Button size="xs" variant="subtle" color="orange">
-            Preview
-          </Button>
-          <Button size="xs" variant="subtle">
-            Public
-          </Button>
-          <Button size="xs">Save</Button>
-        </Flex>
-      </Flex>
-    </Header>
-  )
-}
-
-function NavbarBuider() {
-  return (
-    <Navbar
-      width={{ base: 250 }}
-      height={500}
-      p="xs"
-      h={`calc(100% - ${heightHeader}px)`}
-      sx={{
-        ...styleShadow,
-      }}
-    >
-      {mockMenu && <SidebarPanelUI menus={mockMenu} />}
-    </Navbar>
-  )
-}
-
-function AsideBuider() {
-  return (
-    <Aside
-      width={{ base: 250 }}
-      height={500}
-      p="xs"
-      h={`calc(100% - ${heightHeader}px)`}
-      sx={{
-        ...styleShadow,
-      }}
-    >
-      {/* Aside content */}
-    </Aside>
   )
 }
