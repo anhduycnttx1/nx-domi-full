@@ -29,7 +29,7 @@ export const dataMockup = {
             component: 'INPUT',
             payloads: {
               placeholder: 'Your email',
-              miw: '300px',
+              miw: '500px',
             },
             content: 'Email address',
           },
@@ -38,7 +38,7 @@ export const dataMockup = {
             component: 'INPUT',
             payloads: {
               placeholder: 'Your password',
-
+              miw: '500px',
               type: 'password',
             },
             content: 'Password',
@@ -67,6 +67,7 @@ export const dataMockup = {
             uid: '24T74FLr07',
             component: 'BUTTON',
             payloads: {
+              miw: '500px',
               onClick: () => console.log('CLicked'),
             },
             content: 'Login',

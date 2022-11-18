@@ -1,4 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import {
   AppShell,
   Aside,
@@ -8,10 +10,8 @@ import {
   Header,
   Navbar,
   Image,
-  Text,
   ActionIcon,
-  Accordion,
-  Stack,
+  Divider,
 } from '@mantine/core'
 
 import {
@@ -24,6 +24,11 @@ import {
   IconLayoutGrid,
   IconPhoto,
   IconSeparator,
+  IconPlus,
+  IconStack,
+  IconDeviceAirpods,
+  IconDeviceLaptop,
+  IconDeviceTablet,
 } from '@tabler/icons'
 import {
   DndContext,
@@ -34,31 +39,26 @@ import {
   KeyboardSensor,
   closestCenter,
   useSensor,
-  UniqueIdentifier,
   MouseSensor,
   TouchSensor,
-  DropAnimation,
-  defaultDropAnimation,
 } from '@dnd-kit/core'
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable'
-import MainAppBuilder from './main-app-builder'
 import { SidebarPanel as SidebarPanelUI } from './components/SidebarPanel'
+import MainAppBuilder from './main-app-builder'
 import EmptyDiv from '../../components/empty/empty'
-import iLogo from '../../../assets/image/logo.png'
 
 export interface BuiderContainerProps {
   data?: any
 }
-const heightHeader = 50
+
+const heightHeader = 48
 const styleShadow = {
-  filter: 'drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))',
+  boxShadow: '0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
 }
+const styleActionIcon = (theme: any) => ({
+  padding: '5px',
+  borderRadius: theme.radius.xl,
+  '&:hover': { color: '#3899ec', background: '#edf4fb' },
+})
 const mockMenu = [
   {
     id: 'layout',
@@ -104,10 +104,11 @@ const mockMenu = [
   },
 ]
 const PLACEHOLDER_ID = 'placeholder'
+
 export default function BuiderContainer(props: BuiderContainerProps) {
   const [activeId, setActiveId] = useState<string | null>(null)
-  const lastOverId = useRef<UniqueIdentifier | null>(null)
-  const recentlyMovedToNewContainer = useRef(false)
+  // const lastOverId = useRef<UniqueIdentifier | null>(null)
+  // const recentlyMovedToNewContainer = useRef(false)
   // const isSortingContainer = activeId ? mockMenu.includes(id, activeId) : false
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -147,7 +148,7 @@ export default function BuiderContainer(props: BuiderContainerProps) {
         navbar={<NavbarBuider />}
         aside={<AsideBuider />}
         header={<HeaderBuider />}
-        styles={(theme) => ({
+        sx={(theme) => ({
           main: { backgroundColor: '#f1f5f9' },
         })}
       >
@@ -186,26 +187,43 @@ function HeaderBuider() {
         ...styleShadow,
       }}
     >
-      <Flex justify="space-between" align="center" h="100%">
-        <Flex align="center" gap="xl">
-          <ActionIcon>
-            <IconChevronLeft size={18} />
+      <Flex mr={16} justify="space-between" align="center" h="100%">
+        <Flex align="center" gap="md">
+          <Link to="/">
+            <ActionIcon>
+              <IconChevronLeft size={20} />
+            </ActionIcon>
+          </Link>
+          <Divider my={6} orientation="vertical" />
+          <ActionIcon variant="light" color="blue" radius="xl">
+            <IconPlus size={20} />
           </ActionIcon>
-          <Image style={{ display: 'block', width: '60px' }} src={iLogo} alt="logo" />
+          <ActionIcon variant="light" radius="xl">
+            <IconStack size={20} />
+          </ActionIcon>
+          <Divider my={6} orientation="vertical" />
+          <ActionIcon variant="light" radius="xl">
+            <IconDeviceLaptop size={20} />
+          </ActionIcon>
+          <ActionIcon variant="light" radius="xl">
+            <IconDeviceTablet size={20} />
+          </ActionIcon>
         </Flex>
         <Flex gap="xs">
-          <ActionIcon onClick={() => console.log('Back up')}>
+          <ActionIcon sx={styleActionIcon} onClick={() => console.log('Back up')}>
             <IconArrowBackUp size={18} />
           </ActionIcon>
-          <ActionIcon onClick={() => console.log('Forwar up')}>
+          <ActionIcon sx={styleActionIcon} onClick={() => console.log('Forwar up')}>
             <IconArrowForwardUp size={18} />
           </ActionIcon>
-          <Button size="xs" variant="outline" color="orange">
+          <Divider my={6} orientation="vertical" />
+          <Button size="xs" variant="subtle" color="orange">
+            Preview
+          </Button>
+          <Button size="xs" variant="subtle">
             Public
           </Button>
-          <Button size="xs" color="orange">
-            Save
-          </Button>
+          <Button size="xs">Save</Button>
         </Flex>
       </Flex>
     </Header>
